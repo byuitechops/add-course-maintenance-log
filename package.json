@@ -1,0 +1,29 @@
+{
+  "name": "add-course-maintenance-log",
+  "version": "1.0.0",
+  "description": "Add Course Maintenance Log as a module item to Instructor Resources as the last item in Standard Resources",
+  "main": "main.js",
+  "dependencies": {
+    "canvas-wrapper": "github:byuitechops/canvas-wrapper"
+  },
+  "devDependencies": {
+    "async": "^2.6.0",
+    "child-development-kit": "github:byuitechops/child-development-kit",
+    "tap": "^10.7.3"
+  },
+  "scripts": {
+    "start": "node ./node_modules/child-development-kit/runChild.js",
+    "test": "tap ./node_modules/child-development-kit/runChild.js -T"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byuitechops/add-course-maintenance-log.git"
+  },
+  "author": "Seth Childers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/byuitechops/add-course-maintenance-log/issues"
+  },
+  "homepage": "https://github.com/byuitechops/add-course-maintenance-log#readme",
+  "childType": "postImport"
+}
