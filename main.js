@@ -52,7 +52,7 @@ module.exports = (course, stepCallback) => {
                 }
             }, (err, moduleItem) => {
                 if (err) {
-                    course.error(new Error(err));
+                    course.error(err);
                     stepCallback(null, course);
                     return;
                 }
