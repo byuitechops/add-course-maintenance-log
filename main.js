@@ -16,7 +16,7 @@ module.exports = (course, stepCallback) => {
             return;
         }
         if (currModule.length === 0) {
-            course.error(new Error(`Instructor Resources module not found`));
+            course.warning(`Instructor Resources module not found`);
             stepCallback(null, course);
             return;
         }
@@ -28,9 +28,8 @@ module.exports = (course, stepCallback) => {
                 return;
             }
             if (moduleItem.length === 0) {
-                course.error(new Error(`Supplemental Resources SubHeader not found`));
-                stepCallback(null, course);
-                return;
+                course.warning(`Supplemental Resources SubHeader not found`);
+                moduleItem.push({ position: 1 });
             }
             /* Make the Course Mainentance Log External Tool module Item */
             canvas.post(`/api/v1/courses/${course.info.canvasOU}/modules/${currModule[0].id}/items`, {
