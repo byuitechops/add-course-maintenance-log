@@ -7,6 +7,12 @@
 const canvas = require('canvas-wrapper');
 
 module.exports = (course, stepCallback) => {
+    var validPlatforms = ['online', 'pathway'];
+    if (!validPlatforms.includes(course.settings.platform)) {
+        course.message('Invalid platform. Skipping child module');
+        stepCallback(null, course);
+        return;
+    }
 
     /* Get the Instructor Resources module */
     canvas.get(`/api/v1/courses/${course.info.canvasOU}/modules?search_term=Instructor Resources`, (err, currModule) => {
@@ -21,15 +27,17 @@ module.exports = (course, stepCallback) => {
             return;
         }
         /* Get the Supplemental Resources SubHeader to know where to position the new module item (right before it) */
-        canvas.get(`/api/v1/courses/${course.info.canvasOU}/modules/${currModule[0].id}/items?search_term=Supplemental Resources`, (err, moduleItem) => {
+        canvas.get(`/api/v1/courses/${course.info.canvasOU}/modules/${currModule[0].id}/items?search_term=Supplemental Resources`, (err, moduleItems) => {
             if (err) {
                 course.error(new Error(err));
                 stepCallback(null, course);
                 return;
             }
-            if (moduleItem.length === 0) {
+            if (moduleItems.length === 0) {
                 course.warning(`Supplemental Resources SubHeader not found`);
-                moduleItem.push({ position: 1 });
+                moduleItems.push({
+                    position: 1
+                });
             }
             /* Make the Course Mainentance Log External Tool module Item */
             canvas.post(`/api/v1/courses/${course.info.canvasOU}/modules/${currModule[0].id}/items`, {
@@ -39,7 +47,7 @@ module.exports = (course, stepCallback) => {
                     'external_url': 'https://web.byui.edu/iLearn/LTI/TDReporting/',
                     'published': false,
                     'new_tab': false,
-                    'position': moduleItem[0].position,
+                    'position': moduleItems[0].position,
                     'indent': 1,
                 }
             }, (err, moduleItem) => {
