@@ -7,6 +7,7 @@
 const canvas = require('canvas-wrapper');
 
 module.exports = (course, stepCallback) => {
+    /* Make sure it's a valid platform */
     var validPlatforms = ['online', 'pathway'];
     if (!validPlatforms.includes(course.settings.platform)) {
         course.message('Invalid platform. Skipping child module');
